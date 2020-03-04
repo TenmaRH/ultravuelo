@@ -85,17 +85,17 @@ Primero tengo que decir que tengo el pokeemerald desactualizado espero que no ha
 1.
 
 	-bg.c
-	-void SetBgAffine(u8 bg, s32 srcCenterX, s32 srcCenterY, s16 dispCenterX, s16 dispCenterY, s16 scaleX, s16 scaleY, u16 		rotationAngle).
+	-void SetBgAffine(u8 bg, s32 srcCenterX, s32 srcCenterY, s16 dispCenterX, s16 dispCenterY, s16 scaleX, s16 scaleY, u16 	rotationAngle).
 
 
 	Esta funcion sirve para el rot/scale del mapa affine.
 
 
-	-bg: el bg que le haremos rot/scale (solo puede ser el dos, para hacerlo con el tres hay que hacer un pequeño cambio en 	la funcion).
+	-bg: el bg que le haremos rot/scale (solo puede ser el dos, para hacerlo con el tres hay que hacer un pequeño cambio en la funcion).
 	-srcCenterX: es el desplazamiento eje X del mapa (cada 256 es un pixel en zoom x1).
 	-srcCenterY: es el desplazamiento eje Y del mapa (cada 256 es un pixel en zoom x1).
-	-dispCenterX: es el pixel de anclaje de la pantalla eje X (120 es el centro de la pantalla, en el ultravuelo ese valor 		siempre es 120).
-	-dispCenterY: es el pixel de anclaje de la pantalla eje Y (80 es el centro de la pantalla, en el ultravuelo ese valor 		siempre es 80).
+	-dispCenterX: es el pixel de anclaje de la pantalla eje X (120 es el centro de la pantalla, en el ultravuelo ese valor 	siempre es 120).
+	-dispCenterY: es el pixel de anclaje de la pantalla eje Y (80 es el centro de la pantalla, en el ultravuelo ese valor 	siempre es 80).
 	-scaleX: escalado del mapa eje X (64=x4, 128=x2, 256=x1, 512=x0.5, 1024=x0.25).
 	-scaleY: escalado del mapa eje Y (64=x4, 128=x2, 256=x1, 512=x0.5, 1024=x0.25).
 	-rotationAngle: angulo de rotacion (no me acuerdo exactamente de los numeros XDDD, pero es facil de comprobar).
@@ -107,7 +107,7 @@ Primero tengo que decir que tengo el pokeemerald desactualizado espero que no ha
 	-void SetAffineData(struct Sprite *sprite, s16 xScale, s16 yScale, u16 rotation).
 
 
-	Esta funcion sirve para el rot/scale de los sprites en modo affine. Es una funcion static cuidado con esto (desconozco 		si hay una funcion parecida a esta que no sea static).
+	Esta funcion sirve para el rot/scale de los sprites en modo affine. Es una funcion static cuidado con esto (desconozco 	si hay una funcion parecida a esta que no sea static).
 
 
 	-sprite: el sprite en modo affine.
@@ -127,7 +127,7 @@ Primero tengo que decir que tengo el pokeemerald desactualizado espero que no ha
 	-void CameraUpdate(void).
 
 
-	La utilidad de esta funcion es para saber hacia donde conio tenes que mover el mapa affine (srcCenterX y srcCenterY, los 	mapas affine usan unos registros diferentes para mover el mapa).
+	La utilidad de esta funcion es para saber hacia donde conio tenes que mover el mapa affine (srcCenterX y srcCenterY, los mapas affine usan unos registros diferentes para mover el mapa).
 
 
 	-deltaX=-1 -> izquierda.
@@ -145,7 +145,7 @@ Primero tengo que decir que tengo el pokeemerald desactualizado espero que no ha
 	-void FieldUpdateBgTilemapScroll(void).
 
 
-	Esta funcion es la que se encarga de mover el mapa no affine, yo meti el sistema de ultravuelo aqui (con un bool para 		comprobar si estamos en modo ultravuelo), evidentemente se puede meter tambien en el fichero overworld.c
+	Esta funcion es la que se encarga de mover el mapa no affine, yo meti el sistema de ultravuelo aqui (con un bool para 	comprobar si estamos en modo ultravuelo), evidentemente se puede meter tambien en el fichero overworld.c
 
 
 5.
@@ -156,19 +156,19 @@ Primero tengo que decir que tengo el pokeemerald desactualizado espero que no ha
 
 	Actualiza la posicion de los sprites.
 
-	Esta funcion es util para el reposicionamiento (desplazamiento) de los minis (lo explicare mas adelante con mas 		detalle).
+	Esta funcion es util para el reposicionamiento (desplazamiento) de los minis (lo explicare mas adelante con mas 	detalle).
 
 
 6.
 
 	-event_object_movement.c
-	-void UpdateEventObjectCurrentMovement(struct EventObject *eventObject, struct Sprite *sprite, bool8 (*callback)(struct 	EventObject *, struct Sprite *)).
+	-void UpdateEventObjectCurrentMovement(struct EventObject *eventObject, struct Sprite *sprite, bool8 (*callback)(struct EventObject *, struct Sprite *)).
 	-bool8 obj_npc_ministep(struct Sprite *sprite).
 
 
 	Calcula los mini pasos que tiene que dar el mini.
 
-	Estas dos funciones son utiles para el reposicionamiento (movimiento) de los minis (lo explicare mas adelante con mas 		detalle).
+	Estas dos funciones son utiles para el reposicionamiento (movimiento) de los minis (lo explicare mas adelante con mas 	detalle).
 
 
 7.
@@ -193,7 +193,7 @@ Primero tengo que decir que tengo el pokeemerald desactualizado espero que no ha
 Pequeño tuto para insertar los minisprites affine :)
 
 
-	INFO. Los minisprites affine no pueden hacer uso del hvflip, es decir hay que insertar los frames (cuando mira a la 		derecha).
+	INFO. Los minisprites affine no pueden hacer uso del hvflip, es decir hay que insertar los frames (cuando mira a la 	derecha).
 
 	INFO. Lon minis affine pueden ser de 16 colores sin problemas (al contrario de los bg affine).
 
@@ -201,7 +201,7 @@ Pequeño tuto para insertar los minisprites affine :)
 
 	INFO. Yo los 3 frames los he insertado al final del spritesheet (esto es importante porque luego no os ira bien).
 
-	INFO. Lo que haremos es SUSTITUIR un mini cualquiera (por ejemplo el fat_man) por el fat_man affine (no hay ningun 		problema en hacer esto ya que los minis affine tambien pueden ser de 16 colores).
+	INFO. Lo que haremos es SUSTITUIR un mini cualquiera (por ejemplo el fat_man) por el fat_man affine (no hay ningun 	problema en hacer esto ya que los minis affine tambien pueden ser de 16 colores).
 
 
 !!!El ejemplo lo hare con el fat_man (16x32) si el mini tiene otro tamanio entonces el tuto varia un poco (no hace falta ser un lince para ver que es lo que hay que cambiar)!!!
@@ -218,7 +218,7 @@ El spritesheet tiene que medir 192 pixel de largo. Lo meteis en la carpeta donde
 
 Donde esta el fat_man (fila 19) sustituimos toda la fila por esto:
 
-	const struct EventObjectGraphicsInfo gEventObjectGraphicsInfo_FatMan = {0xFFFF, EVENT_OBJ_PAL_TAG_0, 				EVENT_OBJ_PAL_TAG_NONE, 256, 16, 32, 2, SHADOW_SIZE_M, FALSE, FALSE, TRACKS_FOOT, &gEventObjectBaseOamAffine_16x32, 		gEventObjectSpriteOamTables_16x32, gEventObjectImageAnimTable_StandardAffine, gEventObjectPicTable_FatMan, 			gDummySpriteAffineAnimTable};
+	const struct EventObjectGraphicsInfo gEventObjectGraphicsInfo_FatMan = {0xFFFF, EVENT_OBJ_PAL_TAG_0, 			EVENT_OBJ_PAL_TAG_NONE, 256, 16, 32, 2, SHADOW_SIZE_M, FALSE, FALSE, TRACKS_FOOT, &gEventObjectBaseOamAffine_16x32, 		gEventObjectSpriteOamTables_16x32, gEventObjectImageAnimTable_StandardAffine, gEventObjectPicTable_FatMan, 			gDummySpriteAffineAnimTable};
 
 Lo que hemos hecho con esto es sustituir los structs por defecto por otros que vamos a crear a continuacion. 
 
@@ -405,7 +405,7 @@ La verdad es que no me acuerdo si era necesario hacer mas cosas (yo diria que no
 
 Esto sin lugar a dudas es lo mas dificil.
 
-	INFO. El sistema este lo he pensado yo (no lo he sacado de ningun sitio), por lo tanto no puedo asegurar que sea la 		mejor forma de hacerlo.
+	INFO. El sistema este lo he pensado yo (no lo he sacado de ningun sitio), por lo tanto no puedo asegurar que sea la 	mejor forma de hacerlo.
 
 	INFO. Para hacer este sistema creo que se puede hacer con numeros decimales (ESTA OPCION NO LA HE EXPLORADO).
 
@@ -413,7 +413,7 @@ Esto sin lugar a dudas es lo mas dificil.
 
 	INFO. Las formulas hay que aplicarlas tanto para el eje X como el eje Y. Yo solo pondre los ejemplos con el eje X.
 
-	INFO IMPORTANTE: El reposicionamiento que yo he hecho funciona cuando el desplazamiento es mas rapido en funcion de la 		altura (cuanto mas alto vuelas mas rapido vas).
+	INFO IMPORTANTE: El reposicionamiento que yo he hecho funciona cuando el desplazamiento es mas rapido en funcion de la 	altura (cuanto mas alto vuelas mas rapido vas).
 
 
 Formula final (no hare el desarrollo de todas las formulas):
@@ -427,12 +427,12 @@ Formula final (no hare el desarrollo de todas las formulas):
 	Cuando subes: gSprites[i].pos1.x += x
 
 
-	D: la distancia que hay entre el punto de anclaje del bg (120 en el caso de las X y 80 en el caso de las Y) y el punto 		de anclaje del mini (centro es decir +8 para las X y +16 para las Y).
+	D: la distancia que hay entre el punto de anclaje del bg (120 en el caso de las X y 80 en el caso de las Y) y el punto 	de anclaje del mini (centro es decir +8 para las X y +16 para las Y).
 
 
 	M: el modulo ANTERIOR (de la formula final).
 	Para esto vamos a tener que guardar para cada mini un par de u8 (x,y).
-	Para calcular M siguiente hay que hacer muchas operaciones mas debido a que tienen que cuadrar los modulos tanto cuando 	subes como cuando bajes.
+	Para calcular M siguiente hay que hacer muchas operaciones mas debido a que tienen que cuadrar los modulos tanto cuando subes como cuando bajes.
 	Esto hay que hacerlo antes de aplicar la formula:
 	-Si estabas bajando y ahora subes cambias el signo del modulo.
 	-Si estabas subiendo y ahora bajas cambias el signo del modulo.
@@ -495,7 +495,7 @@ Codigo para subir y bajar (reposicionamiento zoom):
 
 	//X
 	x = ((gSprites[i].oam.x + 8));
-	if (x > 380) x -= 512; //esto es por si quieres que el mini se siga reposicionando incluso fuera de pantalla (hasta un 				       //cierto margen)
+	if (x > 380) x -= 512; //esto es por si quieres que el mini se siga reposicionando incluso fuera de pantalla (hasta un 	cierto margen)
 
 	//Esta parte es debido a que al tener velocidad mayores a mas altura hay que hacer un apanio (luego explico)
 	//Si no pones las distintas velocidades entonces esta parte no es necesaria.
@@ -575,7 +575,7 @@ Codigo desplazamiento (reposicionamiento desplazamiento):
 	}
 
 	//switch
-	//se hacen un monton de operaciones innecesarias (se divide la velocidad entre 16 al principio y ahora se multiplica por 	 //32 WTF XD????)
+	//se hacen un monton de operaciones innecesarias (se divide la velocidad entre 16 al principio y ahora se multiplica por 32 WTF XD????)
 	//la variable velocidad ni es necesaria (podria se zoom*2 como hago arriba xd)
 	if (ultravueloD == 1) srcCenterX -= (32*velocidad + correccion);
 	else if (ultravueloD == 2) srcCenterX += (32*velocidad + correccion);
