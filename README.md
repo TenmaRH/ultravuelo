@@ -44,23 +44,20 @@ Los modos tiles son los mas complicados: tienes una paleta (0x5000000), un tiles
 
 Modo 0: Este es el modo que usan los juegos de pokemon para los mapas.
 
-bg0, bg1, bg2 y bg3: no affine.
+	bg0, bg1, bg2 y bg3: no affine.
 
 
 Modo 1:
 
-bg0, bg1: no affine.
-
-bg2: affine.
-
-bg3: no se puede usar.
+	bg0, bg1: no affine.
+	bg2: affine.
+	bg3: no se puede usar.
 
 
 Modo 2:
 
-bg0, bg1: no se pueden usar.
-
-bg2, bg3: affine.
+	bg0, bg1: no se pueden usar.
+	bg2, bg3: affine.
 
 
 Por lo tanto para el sistema de ultravuelo solo se puede usar modo 1 (un bg affine) o modo 2 (dos bg affine).
@@ -73,11 +70,9 @@ Modos bitmap:
 Los modos bitmap son los mas sencillos simplemente metes el pixel BGR de la imagen en la VRAM (0x6000000). La primera posicion es el pixel de arriba a la izquierda.
 
 
-Modo 3: 16bpp a pantalla completa (240x160).
-
-Modo 4: 8bpp a pantalla completa (240x160).
-
-Modo 5: 16bpp a "mitad pantalla" (160x128).
+	Modo 3: 16bpp a pantalla completa (240x160).
+	Modo 4: 8bpp a pantalla completa (240x160).
+	Modo 5: 16bpp a "mitad pantalla" (160x128).
 
 
 
@@ -89,48 +84,36 @@ Primero tengo que decir que tengo el pokeemerald desactualizado espero que no ha
 
 1.
 
--bg.c
-
--void SetBgAffine(u8 bg, s32 srcCenterX, s32 srcCenterY, s16 dispCenterX, s16 dispCenterY, s16 scaleX, s16 scaleY, u16 rotationAngle).
-
-
-Esta funcion sirve para el rot/scale del mapa affine.
+	-bg.c
+	-void SetBgAffine(u8 bg, s32 srcCenterX, s32 srcCenterY, s16 dispCenterX, s16 dispCenterY, s16 scaleX, s16 scaleY, u16 		rotationAngle).
 
 
--bg: el bg que le haremos rot/scale (solo puede ser el dos, para hacerlo con el tres hay que hacer un pequeño cambio en la funcion).
+	Esta funcion sirve para el rot/scale del mapa affine.
 
--srcCenterX: es el desplazamiento eje X del mapa (cada 256 es un pixel en zoom x1).
 
--srcCenterY: es el desplazamiento eje Y del mapa (cada 256 es un pixel en zoom x1).
-
--dispCenterX: es el pixel de anclaje de la pantalla eje X (120 es el centro de la pantalla, en el ultravuelo ese valor siempre es 120).
-
--dispCenterY: es el pixel de anclaje de la pantalla eje Y (80 es el centro de la pantalla, en el ultravuelo ese valor siempre es 80).
-
--scaleX: escalado del mapa eje X (64=x4, 128=x2, 256=x1, 512=x0.5, 1024=x0.25).
-
--scaleY: escalado del mapa eje Y (64=x4, 128=x2, 256=x1, 512=x0.5, 1024=x0.25).
-
--rotationAngle: angulo de rotacion (no me acuerdo exactamente de los numeros XDDD, pero es facil de comprobar).
+	-bg: el bg que le haremos rot/scale (solo puede ser el dos, para hacerlo con el tres hay que hacer un pequeño cambio en 	la funcion).
+	-srcCenterX: es el desplazamiento eje X del mapa (cada 256 es un pixel en zoom x1).
+	-srcCenterY: es el desplazamiento eje Y del mapa (cada 256 es un pixel en zoom x1).
+	-dispCenterX: es el pixel de anclaje de la pantalla eje X (120 es el centro de la pantalla, en el ultravuelo ese valor 		siempre es 120).
+	-dispCenterY: es el pixel de anclaje de la pantalla eje Y (80 es el centro de la pantalla, en el ultravuelo ese valor 		siempre es 80).
+	-scaleX: escalado del mapa eje X (64=x4, 128=x2, 256=x1, 512=x0.5, 1024=x0.25).
+	-scaleY: escalado del mapa eje Y (64=x4, 128=x2, 256=x1, 512=x0.5, 1024=x0.25).
+	-rotationAngle: angulo de rotacion (no me acuerdo exactamente de los numeros XDDD, pero es facil de comprobar).
 
 
 2.
 
--No me acuerdo el fichero donde estaba xd.
-
--void SetAffineData(struct Sprite *sprite, s16 xScale, s16 yScale, u16 rotation).
-
-
-Esta funcion sirve para el rot/scale de los sprites en modo affine. Es una funcion static cuidado con esto (desconozco si hay una funcion parecida a esta que no sea static).
+	-No me acuerdo el fichero donde estaba xd.
+	-void SetAffineData(struct Sprite *sprite, s16 xScale, s16 yScale, u16 rotation).
 
 
--sprite: el sprite en modo affine.
+	Esta funcion sirve para el rot/scale de los sprites en modo affine. Es una funcion static cuidado con esto (desconozco 		si hay una funcion parecida a esta que no sea static).
 
--xScale: escalado del sprite eje X (64=x4, 128=x2, 256=x1, 512=x0.5, 1024=x0.25).
 
--yScale: escalado del mapa eje Y (64=x4, 128=x2, 256=x1, 512=x0.5, 1024=x0.25).
-
--rotation: angulo de rotacion (no me acuerdo exactamente de los numeros XDDD, pero es facil de comprobar).
+	-sprite: el sprite en modo affine.
+	-xScale: escalado del sprite eje X (64=x4, 128=x2, 256=x1, 512=x0.5, 1024=x0.25).
+	-yScale: escalado del mapa eje Y (64=x4, 128=x2, 256=x1, 512=x0.5, 1024=x0.25).
+	-rotation: angulo de rotacion (no me acuerdo exactamente de los numeros XDDD, pero es facil de comprobar).
 
 
 !!!Vigilad con el tamanio del oam (max 64x64) si haceis escalado x2 o x4 se puede ver cortado el sprite (en el caso del ultravuelo no problem xd).!!!
@@ -140,21 +123,17 @@ Esta funcion sirve para el rot/scale de los sprites en modo affine. Es una funci
 
 3.
 
--field_camera.c
-
-void CameraUpdate(void).
-
-
-La utilidad de esta funcion es para saber hacia donde conio tenes que mover el mapa affine (srcCenterX y srcCenterY, los mapas affine usan unos registros diferentes para mover el mapa).
+	-field_camera.c
+	-void CameraUpdate(void).
 
 
--deltaX=-1 -> izquierda.
+	La utilidad de esta funcion es para saber hacia donde conio tenes que mover el mapa affine (srcCenterX y srcCenterY, los 	mapas affine usan unos registros diferentes para mover el mapa).
 
--deltaX=1 -> derecha.
 
--deltaY=-1 -> arriba.
-
--deltaY=1 -> abajo.
+	-deltaX=-1 -> izquierda.
+	-deltaX=1 -> derecha.
+	-deltaY=-1 -> arriba.
+	-deltaY=1 -> abajo.
 
 
 !!!No se si hay una forma mejor de hacer esto (yo creo que si xd), pero de esta forma funciona.!!!
@@ -162,57 +141,51 @@ La utilidad de esta funcion es para saber hacia donde conio tenes que mover el m
 
 4.
 
--field_camera.c
+	-field_camera.c
+	-void FieldUpdateBgTilemapScroll(void).
 
-void FieldUpdateBgTilemapScroll(void).
 
-
-Esta funcion es la que se encarga de mover el mapa no affine, yo meti el sistema de ultravuelo aqui (con un bool para comprobar si estamos en modo ultravuelo), evidentemente se puede meter tambien en el fichero overworld.c
+	Esta funcion es la que se encarga de mover el mapa no affine, yo meti el sistema de ultravuelo aqui (con un bool para 		comprobar si estamos en modo ultravuelo), evidentemente se puede meter tambien en el fichero overworld.c
 
 
 5.
 
--sprite.c
+	-sprite.c
+	-void UpdateOamCoords(void).
 
--void UpdateOamCoords(void).
 
+	Actualiza la posicion de los sprites.
 
-Actualiza la posicion de los sprites.
-
-Esta funcion es util para el reposicionamiento (desplazamiento) de los minis (lo explicare mas adelante con mas detalle).
+	Esta funcion es util para el reposicionamiento (desplazamiento) de los minis (lo explicare mas adelante con mas 		detalle).
 
 
 6.
 
--event_object_movement.c
-
--void UpdateEventObjectCurrentMovement(struct EventObject *eventObject, struct Sprite *sprite, bool8 (*callback)(struct EventObject *, struct Sprite *)).
-
--bool8 obj_npc_ministep(struct Sprite *sprite).
+	-event_object_movement.c
+	-void UpdateEventObjectCurrentMovement(struct EventObject *eventObject, struct Sprite *sprite, bool8 (*callback)(struct 	EventObject *, struct Sprite *)).
+	-bool8 obj_npc_ministep(struct Sprite *sprite).
 
 
-Calcula los mini pasos que tiene que dar el mini.
+	Calcula los mini pasos que tiene que dar el mini.
 
-Estas dos funciones son utiles para el reposicionamiento (movimiento) de los minis (lo explicare mas adelante con mas detalle).
+	Estas dos funciones son utiles para el reposicionamiento (movimiento) de los minis (lo explicare mas adelante con mas 		detalle).
 
 
 7.
 
--overworld.c
+	-overworld.c
+	-void OverworldBasic(void).
 
--void OverworldBasic(void).
 
-
-Se encarga de muchas tareas principales del juego (runscripts, runtasks, camaraupdate, buildoambuffer...).
+	Se encarga de muchas tareas principales del juego (runscripts, runtasks, camaraupdate, buildoambuffer...).
 
 
 8.
 
--tileset_anims.c
+	-tileset_anims.c
+	-void QueueAnimTiles_General_Flower(u16 timer).
 
--void QueueAnimTiles_General_Flower(u16 timer).
-
-Animacion de la flor :)
+	Animacion de la flor :)
 
 
 3) Codigo: insertar minisprite affine (sustitucion).
@@ -220,18 +193,19 @@ Animacion de la flor :)
 Pequeño tuto para insertar los minisprites affine :)
 
 
-INFO. Los minisprites affine no pueden hacer uso del hvflip, es decir hay que insertar los frames (cuando mira a la derecha).
+	INFO. Los minisprites affine no pueden hacer uso del hvflip, es decir hay que insertar los frames (cuando mira a la 		derecha).
 
-INFO. Lon minis affine pueden ser de 16 colores sin problemas (al contrario de los bg affine).
+	INFO. Lon minis affine pueden ser de 16 colores sin problemas (al contrario de los bg affine).
 
-INFO. Los sprites que hay que modificar estan en \graphics\event_objects\pics\people\
+	INFO. Los sprites que hay que modificar estan en \graphics\event_objects\pics\people\
 
-INFO. Yo los 3 frames los he insertado al final del spritesheet (esto es importante porque luego no os ira bien).
+	INFO. Yo los 3 frames los he insertado al final del spritesheet (esto es importante porque luego no os ira bien).
 
-INFO. Lo que haremos es SUSTITUIR un mini cualquiera (por ejemplo el fat_man) por el fat_man affine (no hay ningun problema en hacer esto ya que los minis affine tambien pueden ser de 16 colores).
+	INFO. Lo que haremos es SUSTITUIR un mini cualquiera (por ejemplo el fat_man) por el fat_man affine (no hay ningun 		problema en hacer esto ya que los minis affine tambien pueden ser de 16 colores).
 
 
 !!!El ejemplo lo hare con el fat_man (16x32) si el mini tiene otro tamanio entonces el tuto varia un poco (no hace falta ser un lince para ver que es lo que hay que cambiar)!!!
+
 
 
 1. Insertad los frames que faltan (los que miran hacia la izquierda les haceis hflip y los poneis al final) con el programa de edicion que querais y lo indexais (con la misma paleta que tenia!!!).
@@ -239,242 +213,241 @@ INFO. Lo que haremos es SUSTITUIR un mini cualquiera (por ejemplo el fat_man) po
 El spritesheet tiene que medir 192 pixel de largo. Lo meteis en la carpeta donde estaba (borrad el .4bpp para que al compilar (make) lo vuelva a generar).
 
 
+
 2. Abrimos archivo event_object_graphics_info.h
 
 Donde esta el fat_man (fila 19) sustituimos toda la fila por esto:
 
-const struct EventObjectGraphicsInfo gEventObjectGraphicsInfo_FatMan = {0xFFFF, EVENT_OBJ_PAL_TAG_0, EVENT_OBJ_PAL_TAG_NONE, 256, 16, 32, 2, SHADOW_SIZE_M, FALSE, FALSE, TRACKS_FOOT, &gEventObjectBaseOamAffine_16x32, gEventObjectSpriteOamTables_16x32, gEventObjectImageAnimTable_StandardAffine, gEventObjectPicTable_FatMan, gDummySpriteAffineAnimTable};
+	const struct EventObjectGraphicsInfo gEventObjectGraphicsInfo_FatMan = {0xFFFF, EVENT_OBJ_PAL_TAG_0, 				EVENT_OBJ_PAL_TAG_NONE, 256, 16, 32, 2, SHADOW_SIZE_M, FALSE, FALSE, TRACKS_FOOT, &gEventObjectBaseOamAffine_16x32, 		gEventObjectSpriteOamTables_16x32, gEventObjectImageAnimTable_StandardAffine, gEventObjectPicTable_FatMan, 			gDummySpriteAffineAnimTable};
 
 Lo que hemos hecho con esto es sustituir los structs por defecto por otros que vamos a crear a continuacion. 
+
+
 
 3. Abrimos archivo event_object_pic_tables.h
 
 Buscamos el struct "const struct SpriteFrameImage gEventObjectPicTable_FatMan[]" y lo sustituimos por esto:
 
-const struct SpriteFrameImage gEventObjectPicTable_FatMan[] = {
+	const struct SpriteFrameImage gEventObjectPicTable_FatMan[] = {
 
-    overworld_frame(gEventObjectPic_FatMan, 2, 4, 0),
-    overworld_frame(gEventObjectPic_FatMan, 2, 4, 1),
-    overworld_frame(gEventObjectPic_FatMan, 2, 4, 2),
-    overworld_frame(gEventObjectPic_FatMan, 2, 4, 3),
-    overworld_frame(gEventObjectPic_FatMan, 2, 4, 4),
-    overworld_frame(gEventObjectPic_FatMan, 2, 4, 5),
-    overworld_frame(gEventObjectPic_FatMan, 2, 4, 6),
-    overworld_frame(gEventObjectPic_FatMan, 2, 4, 7),
-    overworld_frame(gEventObjectPic_FatMan, 2, 4, 8),
-    overworld_frame(gEventObjectPic_FatMan, 2, 4, 9),  //frame mira derecha
-    overworld_frame(gEventObjectPic_FatMan, 2, 4, 10), //frame anda derecha1
-    overworld_frame(gEventObjectPic_FatMan, 2, 4, 11), //frame anda derecha2
-    
-};
+	    overworld_frame(gEventObjectPic_FatMan, 2, 4, 0),
+	    overworld_frame(gEventObjectPic_FatMan, 2, 4, 1),
+	    overworld_frame(gEventObjectPic_FatMan, 2, 4, 2),
+	    overworld_frame(gEventObjectPic_FatMan, 2, 4, 3),
+	    overworld_frame(gEventObjectPic_FatMan, 2, 4, 4),
+	    overworld_frame(gEventObjectPic_FatMan, 2, 4, 5),
+	    overworld_frame(gEventObjectPic_FatMan, 2, 4, 6),
+	    overworld_frame(gEventObjectPic_FatMan, 2, 4, 7),
+	    overworld_frame(gEventObjectPic_FatMan, 2, 4, 8),
+	    overworld_frame(gEventObjectPic_FatMan, 2, 4, 9),  //frame mira derecha
+	    overworld_frame(gEventObjectPic_FatMan, 2, 4, 10), //frame anda derecha1
+	    overworld_frame(gEventObjectPic_FatMan, 2, 4, 11), //frame anda derecha2
+
+	};
 
 Lo que hemos hecho aqui simplemente es anadir los frames.
 
 
-INFO: A PARTIR DE AQUI TODO LO QUE HAREMOS SOLO HACE FALTA HACERLO UNA VEZ.
+
+	INFO: A PARTIR DE AQUI TODO LO QUE HAREMOS SOLO HACE FALTA HACERLO UNA VEZ.
 
 4. Abrimos archivo base_oam.h
 
 Nos vamos al final del archivo y copiamos esto:
 
-const struct OamData gEventObjectBaseOamAffine_16x32 = {
+	const struct OamData gEventObjectBaseOamAffine_16x32 = {
 
-    .affineMode = ST_OAM_AFFINE_NORMAL, //modo affine
-    .shape = SPRITE_SHAPE(16x32),
-    .size = SPRITE_SIZE(16x32),
-    .priority = 2
-    
-};
+	    .affineMode = ST_OAM_AFFINE_NORMAL, //modo affine
+	    .shape = SPRITE_SHAPE(16x32),
+	    .size = SPRITE_SIZE(16x32),
+	    .priority = 2
+
+	};
 
 Aqui lo que hacemos es decirle que el sprite sera affine.
+
+
 
 5. Abrimos archivo event_object_anims.h
 
 Os vais a la fila que querais (yo lo he puesto en la fila 798, pero podeis ponerlo antes del ultimo struct) y copiais esto:
 
-const union AnimCmd gEventObjectImageAnim_FaceEastAffine[] =
-{
+	const union AnimCmd gEventObjectImageAnim_FaceEastAffine[] =
+	{
 
-    ANIMCMD_FRAME(9, 16),
-    ANIMCMD_JUMP(0),
-    
-};
+	    ANIMCMD_FRAME(9, 16),
+	    ANIMCMD_JUMP(0),
 
-const union AnimCmd gEventObjectImageAnim_GoEastAffine[] =
-{
+	};
 
-    ANIMCMD_FRAME(10, 8),
-    ANIMCMD_FRAME(9, 8),
-    ANIMCMD_FRAME(11, 8),
-    ANIMCMD_FRAME(9, 8),
-    ANIMCMD_JUMP(0),
-    
-};
+	const union AnimCmd gEventObjectImageAnim_GoEastAffine[] =
+	{
 
-const union AnimCmd gEventObjectImageAnim_GoFastEastAffine[] =
-{
+	    ANIMCMD_FRAME(10, 8),
+	    ANIMCMD_FRAME(9, 8),
+	    ANIMCMD_FRAME(11, 8),
+	    ANIMCMD_FRAME(9, 8),
+	    ANIMCMD_JUMP(0),
 
-    ANIMCMD_FRAME(10, 4),
-    ANIMCMD_FRAME(9, 4),
-    ANIMCMD_FRAME(11, 4),
-    ANIMCMD_FRAME(9, 4),
-    ANIMCMD_JUMP(0),
-    
-};
+	};
 
-const union AnimCmd gEventObjectImageAnim_GoFasterEastAffine[] =
-{
+	const union AnimCmd gEventObjectImageAnim_GoFastEastAffine[] =
+	{
 
-    ANIMCMD_FRAME(10, 2),
-    ANIMCMD_FRAME(9, 2),
-    ANIMCMD_FRAME(11, 2),
-    ANIMCMD_FRAME(9, 2),
-    ANIMCMD_JUMP(0),
-    
-};
+	    ANIMCMD_FRAME(10, 4),
+	    ANIMCMD_FRAME(9, 4),
+	    ANIMCMD_FRAME(11, 4),
+	    ANIMCMD_FRAME(9, 4),
+	    ANIMCMD_JUMP(0),
 
-const union AnimCmd gEventObjectImageAnim_GoFastestEastAffine[] =
-{
+	};
 
-    ANIMCMD_FRAME(10, 1),
-    ANIMCMD_FRAME(9, 1),
-    ANIMCMD_FRAME(11, 1),
-    ANIMCMD_FRAME(9, 1),
-    ANIMCMD_JUMP(0),
-    
-};
+	const union AnimCmd gEventObjectImageAnim_GoFasterEastAffine[] =
+	{
 
-const union AnimCmd *const gEventObjectImageAnimTable_StandardAffine[] = {
+	    ANIMCMD_FRAME(10, 2),
+	    ANIMCMD_FRAME(9, 2),
+	    ANIMCMD_FRAME(11, 2),
+	    ANIMCMD_FRAME(9, 2),
+	    ANIMCMD_JUMP(0),
 
-    gEventObjectImageAnim_FaceSouth,
-    gEventObjectImageAnim_FaceNorth,
-    gEventObjectImageAnim_FaceWest,
-    gEventObjectImageAnim_FaceEastAffine,
-    gEventObjectImageAnim_GoSouth,
-    gEventObjectImageAnim_GoNorth,
-    gEventObjectImageAnim_GoWest,
-    gEventObjectImageAnim_GoEastAffine,
-    gEventObjectImageAnim_GoFastSouth,
-    gEventObjectImageAnim_GoFastNorth,
-    gEventObjectImageAnim_GoFastWest,
-    gEventObjectImageAnim_GoFastEastAffine,
-    gEventObjectImageAnim_GoFasterSouth,
-    gEventObjectImageAnim_GoFasterNorth,
-    gEventObjectImageAnim_GoFasterWest,
-    gEventObjectImageAnim_GoFasterEastAffine,
-    gEventObjectImageAnim_GoFastestSouth,
-    gEventObjectImageAnim_GoFastestNorth,
-    gEventObjectImageAnim_GoFastestWest,
-    gEventObjectImageAnim_GoFastestEastAffine,
-    
-};
+	};
+
+	const union AnimCmd gEventObjectImageAnim_GoFastestEastAffine[] =
+	{
+
+	    ANIMCMD_FRAME(10, 1),
+	    ANIMCMD_FRAME(9, 1),
+	    ANIMCMD_FRAME(11, 1),
+	    ANIMCMD_FRAME(9, 1),
+	    ANIMCMD_JUMP(0),
+
+	};
+
+	const union AnimCmd *const gEventObjectImageAnimTable_StandardAffine[] = {
+
+	    gEventObjectImageAnim_FaceSouth,
+	    gEventObjectImageAnim_FaceNorth,
+	    gEventObjectImageAnim_FaceWest,
+	    gEventObjectImageAnim_FaceEastAffine,
+	    gEventObjectImageAnim_GoSouth,
+	    gEventObjectImageAnim_GoNorth,
+	    gEventObjectImageAnim_GoWest,
+	    gEventObjectImageAnim_GoEastAffine,
+	    gEventObjectImageAnim_GoFastSouth,
+	    gEventObjectImageAnim_GoFastNorth,
+	    gEventObjectImageAnim_GoFastWest,
+	    gEventObjectImageAnim_GoFastEastAffine,
+	    gEventObjectImageAnim_GoFasterSouth,
+	    gEventObjectImageAnim_GoFasterNorth,
+	    gEventObjectImageAnim_GoFasterWest,
+	    gEventObjectImageAnim_GoFasterEastAffine,
+	    gEventObjectImageAnim_GoFastestSouth,
+	    gEventObjectImageAnim_GoFastestNorth,
+	    gEventObjectImageAnim_GoFastestWest,
+	    gEventObjectImageAnim_GoFastestEastAffine,
+
+	};
 
 Fijaos que esto sirve para la mayoria de minis (pero no todos).
 
 En el ultimo struct del archivo "const struct UnkStruct_085094AC gUnknown_085094AC[]" (en mi pokeemerald se llama asi xd) lo sustituimos por esto:
 
-const struct UnkStruct_085094AC gUnknown_085094AC[] = {
+	const struct UnkStruct_085094AC gUnknown_085094AC[] = {
 
-    {
-        .anims = gEventObjectImageAnimTable_QuintyPlump,
-        .animPos = {1, 3, 0, 2},
-    },
-    {
-        .anims = gEventObjectImageAnimTable_Standard,
-        .animPos = {1, 3, 0, 2},
-    },
-    {
-        .anims = gEventObjectImageAnimTable_BrendanMayNormal,
-        .animPos = {1, 3, 0, 2},
-    },
-    {
-        .anims = gEventObjectImageAnimTable_AcroBike,
-        .animPos = {1, 3, 0, 2},
-    },
-    {
-        .anims = gEventObjectImageAnimTable_Surfing,
-        .animPos = {1, 3, 0, 2},
-    },
-    {
-        .anims = gEventObjectImageAnimTable_Nurse,
-        .animPos = {1, 3, 0, 2},
-    },
-    {
-        .anims = gEventObjectImageAnimTable_Fishing,
-        .animPos = {1, 3, 0, 2},
-    },
-    {
-        .anims = gEventObjectImageAnimTable_StandardAffine,
-        .animPos = {1, 3, 0, 2},
-    },
-    {
-        NULL,
-        {0, 0, 0, 0},
-    },
-    
-};
+	    {
+		.anims = gEventObjectImageAnimTable_QuintyPlump,
+		.animPos = {1, 3, 0, 2},
+	    },
+	    {
+		.anims = gEventObjectImageAnimTable_Standard,
+		.animPos = {1, 3, 0, 2},
+	    },
+	    {
+		.anims = gEventObjectImageAnimTable_BrendanMayNormal,
+		.animPos = {1, 3, 0, 2},
+	    },
+	    {
+		.anims = gEventObjectImageAnimTable_AcroBike,
+		.animPos = {1, 3, 0, 2},
+	    },
+	    {
+		.anims = gEventObjectImageAnimTable_Surfing,
+		.animPos = {1, 3, 0, 2},
+	    },
+	    {
+		.anims = gEventObjectImageAnimTable_Nurse,
+		.animPos = {1, 3, 0, 2},
+	    },
+	    {
+		.anims = gEventObjectImageAnimTable_Fishing,
+		.animPos = {1, 3, 0, 2},
+	    },
+	    {
+		.anims = gEventObjectImageAnimTable_StandardAffine,
+		.animPos = {1, 3, 0, 2},
+	    },
+	    {
+		NULL,
+		{0, 0, 0, 0},
+	    },
+
+	};
 
 Y con esto termina el tutorial.
 
 La verdad es que no me acuerdo si era necesario hacer mas cosas (yo diria que no).
 
 
+
+
 4) Codigo: reposicionamiento de minis.
 
 Esto sin lugar a dudas es lo mas dificil.
 
-INFO. El sistema este lo he pensado yo (no lo he sacado de ningun sitio), por lo tanto no puedo asegurar que sea la mejor forma de hacerlo.
+	INFO. El sistema este lo he pensado yo (no lo he sacado de ningun sitio), por lo tanto no puedo asegurar que sea la 		mejor forma de hacerlo.
 
-INFO. Para hacer este sistema creo que se puede hacer con numeros decimales (ESTA OPCION NO LA HE EXPLORADO).
+	INFO. Para hacer este sistema creo que se puede hacer con numeros decimales (ESTA OPCION NO LA HE EXPLORADO).
 
-INFO. En vez de numeros decimales yo lo he hecho con el resto de la division (a%b) a partir de ahora lo llamare modulo.
+	INFO. En vez de numeros decimales yo lo he hecho con el resto de la division (a%b) a partir de ahora lo llamare modulo.
 
-INFO. Las formulas hay que aplicarlas tanto para el eje X como el eje Y. Yo solo pondre los ejemplos con el eje X.
+	INFO. Las formulas hay que aplicarlas tanto para el eje X como el eje Y. Yo solo pondre los ejemplos con el eje X.
 
-INFO IMPORTANTE: El reposicionamiento que yo he hecho funciona cuando el desplazamiento es mas rapido en funcion de la altura (cuanto mas alto vuelas mas rapido vas).
+	INFO IMPORTANTE: El reposicionamiento que yo he hecho funciona cuando el desplazamiento es mas rapido en funcion de la 		altura (cuanto mas alto vuelas mas rapido vas).
 
 
 Formula final (no hare el desarrollo de todas las formulas):
 
-X = (D+M)/Z
+
+	X = (D+M)/Z
 
 
-X: la distancia que hay que sumar (o restar) a la posicion actual del mini (es decir reposicionarlo).
-
-Cuando bajas: gSprites[i].pos1.x -= x
-
-Cuando subes: gSprites[i].pos1.x += x
+	X: la distancia que hay que sumar (o restar) a la posicion actual del mini (es decir reposicionarlo).
+	Cuando bajas: gSprites[i].pos1.x -= x
+	Cuando subes: gSprites[i].pos1.x += x
 
 
-D: la distancia que hay entre el punto de anclaje del bg (120 en el caso de las X y 80 en el caso de las Y) y el punto de anclaje del mini (centro es decir +8 para las X y +16 para las Y).
+	D: la distancia que hay entre el punto de anclaje del bg (120 en el caso de las X y 80 en el caso de las Y) y el punto 		de anclaje del mini (centro es decir +8 para las X y +16 para las Y).
 
 
-M: el modulo ANTERIOR (de la formula final).
-
-Para esto vamos a tener que guardar para cada mini un par de u8 (x,y).
-
-Para calcular M siguiente hay que hacer muchas operaciones mas debido a que tienen que cuadrar los modulos tanto cuando subes como cuando bajes.
-
-Esto hay que hacerlo antes de aplicar la formula:
-
--Si estabas bajando y ahora subes cambias el signo del modulo.
-
--Si estabas subiendo y ahora bajas cambias el signo del modulo.
+	M: el modulo ANTERIOR (de la formula final).
+	Para esto vamos a tener que guardar para cada mini un par de u8 (x,y).
+	Para calcular M siguiente hay que hacer muchas operaciones mas debido a que tienen que cuadrar los modulos tanto cuando 	subes como cuando bajes.
+	Esto hay que hacerlo antes de aplicar la formula:
+	-Si estabas bajando y ahora subes cambias el signo del modulo.
+	-Si estabas subiendo y ahora bajas cambias el signo del modulo.
 
 
-Z: zoom/incremento
-
-Es el numero de partes que hay entre pixeles.
-
-En mi caso el incremento es de 16:
-
--porque queda bien xd.
-
--porque luego al calcular los ministeps el calculo se simplifica mucho.
+	Z: zoom/incremento
+	Es el numero de partes que hay entre pixeles.
+	En mi caso el incremento es de 16:
+	-porque queda bien xd.
+	-porque luego al calcular los ministeps el calculo se simplifica mucho.
+	
+	
 
 Codigo para subir y bajar (reposicionamiento zoom):
 
-{
 
 	//Primero:
 
@@ -581,15 +554,11 @@ Codigo para subir y bajar (reposicionamiento zoom):
 	gSprites[i].pos1.x += x;
 	gSprites[i].pos1.y += y;
 
-}
 
 
 Codigo desplazamiento (reposicionamiento desplazamiento):
 
-//se entra si ultravueloD > 0
-
-if (ultravueloD > 0) {
-
+	//se entra si ultravueloD > 0
 	s16 correccion = 0;
 	velocidad = zoom/16;
 	//subes y bajas mientras te mueves (hay que corregir la velocidad para que los minis se posicionen de forma correcta)
@@ -624,84 +593,74 @@ if (ultravueloD > 0) {
 		srcCenterYAnt = srcCenterY;
 	}
 
-}
+	//esto va en la funcion UpdateOamCoords
+	//si modo ultravuelo activado y el sprite es affine...
+	
+	sprite->oam.x = sprite->pos1.x + sprite->pos2.x + sprite->centerToCornerVecX + (gSpriteCoordOffsetX + 				gTotalCameraPixelOffsetX); //esto no tengo ni idea de porque funciona (puede que haya algun bug)
 
-//esto va en la funcion UpdateOamCoords
-
-//si modo ultravuelo activado y el sprite es affine...
-
-sprite->oam.x = sprite->pos1.x + sprite->pos2.x + sprite->centerToCornerVecX + (gSpriteCoordOffsetX + gTotalCameraPixelOffsetX); //esto no tengo ni idea de porque funciona (puede que haya algun bug)
-
-sprite->oam.y = sprite->pos1.y + sprite->pos2.y + sprite->centerToCornerVecY + (gSpriteCoordOffsetY + gTotalCameraPixelOffsetY);
+	sprite->oam.y = sprite->pos1.y + sprite->pos2.y + sprite->centerToCornerVecY + (gSpriteCoordOffsetY + 				gTotalCameraPixelOffsetY);
 
 
 Codigo movimiento (reposicionamiento movimiento):
 
-//esta funcion es nueva (basada en obj_npc_ministep)
+	//esta funcion es nueva (basada en obj_npc_ministep)
+	//solo sirve si el incremento es 16
+	bool8 obj_npc_ministep_affine(struct Sprite *sprite, u8 spriteId) {
 
-//solo sirve si el incremento es 16
+	    s16 direccion = sprite->data[3]; //0-> nada, 1-> abajo, 2-> arriba, 3-> izquierda, 4-> derecha
+	    s8 num = 16;
+	    s8 modulo;
 
-bool8 obj_npc_ministep_affine(struct Sprite *sprite, u8 spriteId) {
+	    if (bajando) num = -16;
 
-    s16 direccion = sprite->data[3]; //0-> nada, 1-> abajo, 2-> arriba, 3-> izquierda, 4-> derecha
-    s8 num = 16;
-    s8 modulo;
-    
-    if (bajando) num = -16;
+	    if (sprite->data[5] >= gUnknown_0850E768[sprite->data[4]]) return FALSE;
 
-    if (sprite->data[5] >= gUnknown_0850E768[sprite->data[4]]) return FALSE;
+	    if ((direccion == 1) || (direccion == 2)) {
+		if (direccion == 1) modY[spriteId] += num;
+		else modY[spriteId] -= num;
+		      //Aqui hago una cosa un poco rara, pero funciona :)
+		modulo = modY[spriteId]%(zoom/16);
+		if (modulo != modY[spriteId]) {
+		    modY[spriteId] = modulo;
+		    gUnknown_0850E754[sprite->data[4]][sprite->data[5]](sprite, sprite->data[3]);
+		}
+	    }
+	    else if ((direccion == 3) || (direccion == 4)) {
+		if (direccion == 3) modX[spriteId] -= num;
+		else modX[spriteId] += num;
+		modulo = modX[spriteId]%(zoom/16);
+		if (modulo != modX[spriteId]) {
+		    modX[spriteId] = modulo;
+		    gUnknown_0850E754[sprite->data[4]][sprite->data[5]](sprite, sprite->data[3]);
+		}
+	    }
 
-    if ((direccion == 1) || (direccion == 2)) {
-        if (direccion == 1) modY[spriteId] += num;
-        else modY[spriteId] -= num;
-	      //Aqui hago una cosa un poco rara, pero funciona :)
-        modulo = modY[spriteId]%(zoom/16);
-        if (modulo != modY[spriteId]) {
-            modY[spriteId] = modulo;
-            gUnknown_0850E754[sprite->data[4]][sprite->data[5]](sprite, sprite->data[3]);
-        }
-    }
-    else if ((direccion == 3) || (direccion == 4)) {
-        if (direccion == 3) modX[spriteId] -= num;
-        else modX[spriteId] += num;
-        modulo = modX[spriteId]%(zoom/16);
-        if (modulo != modX[spriteId]) {
-            modX[spriteId] = modulo;
-            gUnknown_0850E754[sprite->data[4]][sprite->data[5]](sprite, sprite->data[3]);
-        }
-    }
-    
-    sprite->data[5]++;
+	    sprite->data[5]++;
 
-    if (sprite->data[5] < gUnknown_0850E768[sprite->data[4]]) return FALSE;
+	    if (sprite->data[5] < gUnknown_0850E768[sprite->data[4]]) return FALSE;
 
-    return TRUE;
-    
-}
+	    return TRUE;
 
-//la funcion anterior la llamamos desde aqui
+	}
 
-//en la funcion npc_obj_ministep_stop_on_arrival
+	//la funcion anterior la llamamos desde aqui
+	//en la funcion npc_obj_ministep_stop_on_arrival
+	//si modo ultravuelo activado y mini affine...
+	if (obj_npc_ministep_affine(sprite, eventObject->spriteId)) {
 
-//si modo ultravuelo activado y mini affine...
+		ShiftStillEventObjectCoords(eventObject);
+		eventObject->triggerGroundEffectsOnStop = TRUE;
+		sprite->animPaused = TRUE;
+		return TRUE;
 
-if (obj_npc_ministep_affine(sprite, eventObject->spriteId)) {
-
-	ShiftStillEventObjectCoords(eventObject);
-	eventObject->triggerGroundEffectsOnStop = TRUE;
-	sprite->animPaused = TRUE;
-	return TRUE;
-	
-}
-
-//si el modo ultravuelo no esta activado entonces haces lo mismo que ya habia en la funcion
+	}
+	//si el modo ultravuelo no esta activado entonces haces lo mismo que ya habia en la funcion
 
 
 Aplicar bg affine:
 
-//Finalmente ponemos esto (fuera del if ultravueloD > 0)
-
-SetBgAffineUltravuelo(2, srcCenterX, srcCenterY, 120, 80, zoom, zoom, 0); //solo el bg2
+	//Finalmente ponemos esto (fuera del if ultravueloD > 0)
+	SetBgAffineUltravuelo(2, srcCenterX, srcCenterY, 120, 80, zoom, zoom, 0); //solo el bg2
 
 -------------------
 
